@@ -146,7 +146,7 @@ eval("\n\n/* istanbul ignore next  */\nfunction styleTagTransform(css, styleElem
   \**********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ Header)\n/* harmony export */ });\n/* harmony import */ var _headerHandler__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./headerHandler */ \"./src/components/headerHandler.ts\");\n\r\nclass Header extends HTMLElement {\r\n    constructor() {\r\n        super();\r\n        this.render();\r\n        (0,_headerHandler__WEBPACK_IMPORTED_MODULE_0__.onSubmitSearchBox)();\r\n        (0,_headerHandler__WEBPACK_IMPORTED_MODULE_0__.onClickLogo)();\r\n    }\r\n    render() {\r\n        this.innerHTML = `\r\n    <header>\r\n      <h1><img id=\"logo\" src=\"../assets/logo.png\" alt=\"MovieList 로고\" /></h1>\r\n      <form id=\"search-bar\" class=\"search-box\">\r\n        <input type=\"text\" placeholder=\"검색\" name=\"search-bar\"/>\r\n        <button class=\"search-button\">검색</button>\r\n      </form>\r\n    </header>\r\n    `;\r\n    }\r\n}\r\n\n\n//# sourceURL=webpack://javascript-movie-review/./src/components/Header.ts?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ Header)\n/* harmony export */ });\n/* harmony import */ var _headerHandler__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./headerHandler */ \"./src/components/headerHandler.ts\");\n\r\nclass Header extends HTMLElement {\r\n    constructor() {\r\n        super();\r\n        this.render();\r\n        (0,_headerHandler__WEBPACK_IMPORTED_MODULE_0__.onSubmitSearchBox)();\r\n        (0,_headerHandler__WEBPACK_IMPORTED_MODULE_0__.onClickLogo)();\r\n    }\r\n    render() {\r\n        this.innerHTML = `\r\n    <header>\r\n      <h1><img id=\"logo\" src=\"./assets/logo.png\" alt=\"MovieList 로고\" /></h1>\r\n      <form id=\"search-bar\" class=\"search-box\">\r\n        <input type=\"text\" placeholder=\"검색\" name=\"search-bar\"/>\r\n        <button class=\"search-button\">검색</button>\r\n      </form>\r\n    </header>\r\n    `;\r\n    }\r\n}\r\n\n\n//# sourceURL=webpack://javascript-movie-review/./src/components/Header.ts?");
 
 /***/ }),
 
@@ -314,6 +314,18 @@ eval("module.exports = __webpack_require__.p + \"f1bd4269f4446ceae306.png\";\n\n
 /******/ 		};
 /******/ 	})();
 /******/ 	
+/******/ 	/* webpack/runtime/global */
+/******/ 	(() => {
+/******/ 		__webpack_require__.g = (function() {
+/******/ 			if (typeof globalThis === 'object') return globalThis;
+/******/ 			try {
+/******/ 				return this || new Function('return this')();
+/******/ 			} catch (e) {
+/******/ 				if (typeof window === 'object') return window;
+/******/ 			}
+/******/ 		})();
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
 /******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
@@ -332,7 +344,22 @@ eval("module.exports = __webpack_require__.p + \"f1bd4269f4446ceae306.png\";\n\n
 /******/ 	
 /******/ 	/* webpack/runtime/publicPath */
 /******/ 	(() => {
-/******/ 		__webpack_require__.p = "/";
+/******/ 		var scriptUrl;
+/******/ 		if (__webpack_require__.g.importScripts) scriptUrl = __webpack_require__.g.location + "";
+/******/ 		var document = __webpack_require__.g.document;
+/******/ 		if (!scriptUrl && document) {
+/******/ 			if (document.currentScript)
+/******/ 				scriptUrl = document.currentScript.src
+/******/ 			if (!scriptUrl) {
+/******/ 				var scripts = document.getElementsByTagName("script");
+/******/ 				if(scripts.length) scriptUrl = scripts[scripts.length - 1].src
+/******/ 			}
+/******/ 		}
+/******/ 		// When supporting browsers where an automatic publicPath is not supported you must specify an output.publicPath manually via configuration
+/******/ 		// or pass an empty string ("") and set the __webpack_public_path__ variable from your code to use your own logic.
+/******/ 		if (!scriptUrl) throw new Error("Automatic publicPath is not supported in this browser");
+/******/ 		scriptUrl = scriptUrl.replace(/#.*$/, "").replace(/\?.*$/, "").replace(/\/[^\/]+$/, "/");
+/******/ 		__webpack_require__.p = scriptUrl;
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/jsonp chunk loading */
