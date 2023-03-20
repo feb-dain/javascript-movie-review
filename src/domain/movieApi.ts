@@ -1,58 +1,60 @@
-import { removeMoreButton } from "../components/movieListHandler";
-import { IApiResponse, IMovie } from "../type";
+import { ApiData, MovieApiResponse, Movie } from "../type";
 import { movieStore } from "./movieStore";
+import { API, PATH } from "../constants";
+const { URL: API_URL, LANGUAGE } = API;
+const { POPULAR_MOVIE } = PATH;
 
 export const movieApi = {
-  page: 1,
-  total_page: 2,
-  last_keyword: "",
+  url: new URL(API_URL),
+  urlParams: new URLSearchParams(),
+  totalPage: 2,
 
-  showPopularMovies() {
-    fetchMovieInfo("movie/popular", "");
-  },
-
-  showSearchedMovies(keyword: string) {
-    fetchMovieInfo("search/movie", keyword);
+  showMovies(endpoint: string = POPULAR_MOVIE, keyword: string = "") {
+    fetchMovieInfo(endpoint, keyword);
   },
 };
 
 const fetchMovieInfo = async (endpoint: string, keyword: string) => {
-  const url = buildUrl(endpoint, keyword);
-  const response = await fetch(url);
-  catchError(response.status);
+  const movieUrl = buildMovieUrl(endpoint, keyword);
+  const movieApiData = await fetch(movieUrl).then((response) =>
+    response.json()
+  );
+  catchError(movieApiData);
 
-  handleMovieInfoResponse(response);
+  saveMovieInfoResponse(movieApiData);
 };
 
-const buildUrl = (endpoint: string, keyword: string) =>
-  `https://api.themoviedb.org/3/${endpoint}?api_key=${
-    process.env.API_KEY
-  }&language=ko&page=${movieApi.page}${
-    keyword === "" ? "" : `&query=${keyword}`
-  }`;
+const buildMovieUrl = (endpoint: string, keyword: string) => {
+  movieApi.url = new URL(endpoint, API_URL);
+  const urlParams = new URLSearchParams(`api_key=${process.env.API_KEY}`);
 
-const catchError = (status: number) => {
+  urlParams.set("language", LANGUAGE);
+  urlParams.set("page", movieApi.urlParams.get("page") ?? "1");
+  urlParams.set("query", keyword);
+
+  movieApi.urlParams = urlParams;
+
+  return `${movieApi.url}?${urlParams}`;
+};
+
+const catchError = (movieApiData: ApiData) => {
   try {
-    if (status !== 200) throw new Error("서버가 불안정합니다.");
+    if (movieApiData.success === false)
+      throw new Error(movieApiData.status_message);
   } catch (error) {
     if (error instanceof Error) return alert(error.message);
   }
 };
 
-const handleMovieInfoResponse = async (response: Response) => {
-  const { results, total_pages } = await response.json();
-  movieApi.total_page = total_pages;
+const saveMovieInfoResponse = (movieApiData: ApiData) => {
+  movieApi.totalPage = movieApiData.total_pages;
 
-  saveMoviesAndRemoveMoreButton(results);
+  movieStore.appendMovies(convertApiResponseToMovieList(movieApiData.results));
 };
 
-const saveMoviesAndRemoveMoreButton = (results: IApiResponse[]) => {
-  movieStore.appendMovies(convertApiResponseToMovieList(results));
-
-  if (movieApi.page === movieApi.total_page) removeMoreButton();
-};
-
-const convertApiResponseToMovieList = (results: IApiResponse[]): IMovie[] => {
+const convertApiResponseToMovieList = (
+  results: Array<MovieApiResponse>
+): Array<Movie> => {
   return results.map((movie) => {
     return {
       poster: movie.poster_path,
@@ -60,10 +62,4 @@ const convertApiResponseToMovieList = (results: IApiResponse[]): IMovie[] => {
       ratings: movie.vote_average,
     };
   });
-};
-
-export const resetMoviesAndPages = () => {
-  movieStore.movies = [];
-  movieApi.page = 1;
-  movieApi.total_page = 2;
 };

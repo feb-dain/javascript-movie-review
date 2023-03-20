@@ -1,33 +1,32 @@
 import { movieApi } from "../domain/movieApi";
-import { executeEventListener } from "../utils/eventListener";
 import { $ } from "../utils/selector";
 import MovieList from "./MovieList";
+import { MOVIE_COUNT_IN_ONE_PAGE } from "../constants";
 
-export const onClickMoreButton = () => {
-  executeEventListener($("#more-button"), "click", async () => {
-    $(".item-list").insertAdjacentHTML("beforeend", renderSkeletons());
+export const updateMovies = () => {
+  $<MovieList>("#movie-list").renderMovies();
 
-    movieApi.page += 1;
+  loadMoreMovies();
+  removeMoreButtonIfLastPage();
+};
 
-    if (movieApi.last_keyword === "") {
-      movieApi.showPopularMovies();
-    } else {
-      movieApi.showSearchedMovies(movieApi.last_keyword);
-    }
+const loadMoreMovies = () => {
+  $("#more-button").addEventListener("click", () => {
+    $(".item-list").insertAdjacentHTML("beforeend", makeSkeletons());
+
+    const currentPage = Number(movieApi.urlParams.get("page"));
+    movieApi.urlParams.set("page", `${currentPage + 1}`);
+
+    const path = movieApi.url.pathname.replace("/3/", "");
+    movieApi.showMovies(path, `${movieApi.urlParams.get("query")}`);
   });
 };
 
-export const updateMovies = () => {
-  const movieList = $("#movie-list") as MovieList;
-  movieList.renderMovies();
-
-  onClickMoreButton();
+const removeMoreButtonIfLastPage = () => {
+  const currentPage = Number(movieApi.urlParams.get("page"));
+  if (currentPage === movieApi.totalPage) $("#more-button").remove();
 };
 
-export const removeMoreButton = () => {
-  $("#more-button").remove();
-};
-
-export const renderSkeletons = () => {
-  return "<movie-skeleton></movie-skeleton>".repeat(20);
+export const makeSkeletons = () => {
+  return "<movie-skeleton></movie-skeleton>".repeat(MOVIE_COUNT_IN_ONE_PAGE);
 };
