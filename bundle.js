@@ -176,7 +176,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
   \****************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ Header)\n/* harmony export */ });\n/* harmony import */ var _headerHandler__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./headerHandler */ \"./src/components/header/headerHandler.ts\");\n\nclass Header extends HTMLElement {\n    constructor() {\n        super();\n        this.render();\n        (0,_headerHandler__WEBPACK_IMPORTED_MODULE_0__.initSearchBox)();\n        (0,_headerHandler__WEBPACK_IMPORTED_MODULE_0__.initLogo)();\n    }\n    render() {\n        this.innerHTML = `\n    <header>\n      <h1>\n        <img class=\"logo\" src=\"../assets/logo.png\" alt=\"MovieList 로고\" />\n        <button class=\"logo none-display\"><i class=\"bi bi-house-fill\"></i></button>\n      </h1>\n      <form id=\"search-bar\" class=\"search-box\">\n        <input type=\"text\" placeholder=\"검색\" name=\"search-bar\" class=\"search-input\"/>\n        <button class=\"search-button\">검색</button>\n      </form>\n    </header>\n    `;\n    }\n}\n\n\n//# sourceURL=webpack://javascript-movie-review/./src/components/header/index.ts?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ Header)\n/* harmony export */ });\n/* harmony import */ var _headerHandler__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./headerHandler */ \"./src/components/header/headerHandler.ts\");\n\nclass Header extends HTMLElement {\n    constructor() {\n        super();\n        this.render();\n        (0,_headerHandler__WEBPACK_IMPORTED_MODULE_0__.initSearchBox)();\n        (0,_headerHandler__WEBPACK_IMPORTED_MODULE_0__.initLogo)();\n    }\n    render() {\n        this.innerHTML = `\n    <header>\n      <h1>\n        <img class=\"logo\" src=\"./assets/logo.png\" alt=\"MovieList 로고\" />\n        <button class=\"logo none-display\"><i class=\"bi bi-house-fill\"></i></button>\n      </h1>\n      <form id=\"search-bar\" class=\"search-box\">\n        <input type=\"text\" placeholder=\"검색\" name=\"search-bar\" class=\"search-input\"/>\n        <button class=\"search-button\">검색</button>\n      </form>\n    </header>\n    `;\n    }\n}\n\n\n//# sourceURL=webpack://javascript-movie-review/./src/components/header/index.ts?");
 
 /***/ }),
 
@@ -382,7 +382,7 @@ eval("module.exports = __webpack_require__.p + \"f1bd4269f4446ceae306.png\";\n\n
 /******/ 	
 /******/ 	/* webpack/runtime/publicPath */
 /******/ 	(() => {
-/******/ 		__webpack_require__.p = "/";
+/******/ 		__webpack_require__.p = "./";
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/jsonp chunk loading */
